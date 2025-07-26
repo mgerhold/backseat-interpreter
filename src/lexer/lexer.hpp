@@ -78,7 +78,6 @@ namespace lexer {
 
         template<utils::StaticString state>
         auto execute_state_machine() -> void {
-            // std::println("State is {}", state.view());
             static constexpr auto successors = get_possible_successors<state>();
             if constexpr (std::size(successors) == 0) {
                 if (not is_valid_identifier_continuation(current())) {
@@ -90,15 +89,12 @@ namespace lexer {
                     throw std::runtime_error{ "Not implemented" };
                 }
             } else {
-                // std::println("current char: {}", current());
                 static constexpr auto successors = get_possible_successors<state>();
                 switch (current()) {
                     template for (constexpr char successor : successors) {
-                        case static_cast<char>(successor):
-                            // std::println("Successor {} found. {}", static_cast<char>(successor), static_cast<int>(successor));
-                            // std::println("Next state is: {}", get_next_state<state, static_cast<char>(successor)>().view());
+                        case successor:
                             advance();
-                            execute_state_machine<get_next_state<state, static_cast<char>(successor)>()>();
+                            execute_state_machine<get_next_state<state, successor>()>();
                             return; // Cannot use `break`, as this would break out of the `template for`.
                     }
                     default:

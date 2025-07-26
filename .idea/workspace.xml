@@ -28,13 +28,8 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="68f0bdb1-450d-488b-bc33-324cbd777fb1" name="Changes" comment="initial commit">
-      <change beforePath="$PROJECT_DIR$/.idea/editor.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/editor.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="68f0bdb1-450d-488b-bc33-324cbd777fb1" name="Changes" comment="fix: remove redundant casts and debug prints">
       <change beforePath="$PROJECT_DIR$/src/lexer/lexer.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/lexer/lexer.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lexer/token.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/lexer/token.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/utils.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/utils.hpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,7 +56,9 @@
     <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://D:/cpp/backseat-interpreter/src/lexer/lexer.hpp" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/lexer/lexer.hpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://D:/cpp/backseat-interpreter/src/lexer/token.hpp" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/lexer/token.hpp" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/main.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/utils/utils.hpp" root0="SKIP_HIGHLIGHTING" />
@@ -82,7 +79,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "CMake Application.main.executor": "Debug",
+    "CMake Application.main.executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.RadMigrateCodeStyle": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
@@ -131,7 +128,23 @@
       <option name="project" value="LOCAL" />
       <updated>1753546242764</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="fix: avoid generating duplicate `case` labels">
+      <option name="closed" value="true" />
+      <created>1753550764215</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1753550764215</updated>
+    </task>
+    <task id="LOCAL-00003" summary="fix: remove redundant casts and debug prints">
+      <option name="closed" value="true" />
+      <created>1753567036345</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1753567036345</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="VCPKGProject">
@@ -141,6 +154,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="initial commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="initial commit" />
+    <MESSAGE value="fix: avoid generating duplicate `case` labels" />
+    <MESSAGE value="fix: remove redundant casts and debug prints" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix: remove redundant casts and debug prints" />
   </component>
 </project>

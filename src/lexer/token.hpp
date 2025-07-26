@@ -12,8 +12,8 @@ namespace lexer {
     struct ConstantLexeme{};
 
     namespace token_descriptions {
-        // using GreaterThan = ConstantLexeme<">">;
-        // using GreatherThanOrEqual = ConstantLexeme<">=">;
+        using GreaterThan = ConstantLexeme<">">;
+        using GreatherThanOrEqual = ConstantLexeme<">=">;
         using Int = ConstantLexeme<"int">;
         using If = ConstantLexeme<"if">;
         using Else = ConstantLexeme<"else">;
