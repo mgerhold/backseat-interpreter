@@ -12,12 +12,15 @@ namespace lexer {
     struct ConstantLexeme{};
 
     namespace token_descriptions {
+        // using GreaterThan = ConstantLexeme<">">;
+        // using GreatherThanOrEqual = ConstantLexeme<">=">;
         using Int = ConstantLexeme<"int">;
-        using Input = ConstantLexeme<"input">;
+        using If = ConstantLexeme<"if">;
+        using Else = ConstantLexeme<"else">;
+        using While = ConstantLexeme<"while">;
+        using Loop = ConstantLexeme<"loop">;
         using For = ConstantLexeme<"for">;
         using Function = ConstantLexeme<"function">;
-        using Plus = ConstantLexeme<"+">;
-        // struct Int: Token<"int">;
         // struct Ident: Regex<"[a-zA-Z_][a-zA-Z_0-9]*">;
     };
 

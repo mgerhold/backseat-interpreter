@@ -4,6 +4,10 @@
     <option name="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=C004479E_002D05F5_002D51E2_002DB746_002D62862CE5D248_002Fd_003Asrc_002Fd_003Alexer_002Ff_003Alexer_002Ehpp/@EntryIndexedValue" value="ExplicitlyExcluded" type="string" />
     <option name="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=C004479E_002D05F5_002D51E2_002DB746_002D62862CE5D248_002Fd_003Asrc_002Fd_003Alexer_002Ff_003Atoken_002Ehpp/@EntryIndexedValue" value="ExplicitlyExcluded" type="string" />
     <option name="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=C004479E_002D05F5_002D51E2_002DB746_002D62862CE5D248_002Fd_003Asrc_002Fd_003Alexer_002Ff_003Atoken_005Falternative_002Ehpp/@EntryIndexedValue" value="ExplicitlyExcluded" type="string" />
+    <option name="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=C004479E_002D05F5_002D51E2_002DB746_002D62862CE5D248_002Fd_003Asrc_002Fd_003Autils_002Ff_003Autils_002Ehpp/@EntryIndexedValue" value="ExplicitlyExcluded" type="string" />
+    <option name="/Default/CodeInspection/Highlighting/InspectionSeverities/=CppDeprecatedOverridenMethod/@EntryIndexedValue" value="WARNING" type="string" />
+    <option name="/Default/CodeInspection/Highlighting/InspectionSeverities/=CppRedundantFwdClassOrEnumSpecifier/@EntryIndexedValue" value="SUGGESTION" type="string" />
+    <option name="/Default/CodeInspection/Highlighting/InspectionSeverities/=CppRedundantQualifierADL/@EntryIndexedValue" value="DO_NOT_SHOW" type="string" />
     <option name="/Default/CodeStyle/CodeFormatting/CppClangFormat/EnableClangFormatSupport/@EntryValue" value="true" type="bool" />
   </component>
 </project>
