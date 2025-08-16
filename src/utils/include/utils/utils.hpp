@@ -7,6 +7,11 @@
 #include "types.hpp"
 
 namespace utils {
+    template<typename... Ts>
+    struct Overloaded final : Ts... {
+        using Ts::operator()...;
+    };
+
     template<usize n>
     struct StaticString final {
         std::array<char, n> buffer;

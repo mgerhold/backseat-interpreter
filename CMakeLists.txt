@@ -23,6 +23,7 @@ add_compile_options(
         -freflection # https://wg21.link/p2996
         -fparameter-reflection # https://wg21.link/p3096
         -fexpansion-statements # https://wg21.link/p1306
+#        -ftime-trace
 #        -fbackseat_interpreter-latest # ???
 #        -fconsteval-blocks # https://wg21.link/p3289
 #        -fbackseat_interpreter-new-syntax # https://wg21.link/p3381

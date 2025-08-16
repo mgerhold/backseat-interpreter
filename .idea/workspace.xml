@@ -4,8 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="BackendCodeEditorMiscSettings">
-    <option name="/Default/Environment/Hierarchy/GeneratedFilesCacheKey/Timestamp/@EntryValue" value="1738" type="long" />
+    <option name="/Default/Environment/Hierarchy/GeneratedFilesCacheKey/Timestamp/@EntryValue" value="6" type="long" />
+    <option name="/Default/Housekeeping/FeatureSuggestion/FeatureSuggestionManager/DisabledSuggesters/=SwitchToGoToActionSuggester/@EntryIndexedValue" value="true" type="bool" />
     <option name="/Default/Housekeeping/GlobalSettingsUpgraded/IsUpgraded/@EntryValue" value="true" type="bool" />
+    <option name="/Default/Housekeeping/LiveTemplatesHousekeeping/HotspotSessionHintIsShown/@EntryValue" value="true" type="bool" />
   </component>
   <component name="CMakePresetLoader">{
   &quot;useNewFormat&quot;: true
@@ -18,18 +20,52 @@
   </component>
   <component name="CMakeRunConfigurationManager">
     <generated>
-      <config projectName="backseat_interpreter" targetName="main" />
+      <config projectName="backseat_interpreter" targetName="utils" />
+      <config projectName="backseat_interpreter" targetName="lexer" />
+      <config projectName="backseat_interpreter" targetName="token_types" />
+      <config projectName="backseat_interpreter" targetName="pattern_generator" />
     </generated>
   </component>
   <component name="CMakeSettings">
     <configurations>
-      <configuration PROFILE_NAME="Debug" ENABLED="true" CONFIG_NAME="Debug" TOOLCHAIN_NAME="clang-p2996" />
-      <configuration PROFILE_NAME="Release" ENABLED="true" CONFIG_NAME="Release" TOOLCHAIN_NAME="clang-p2996" />
+      <configuration PROFILE_NAME="Debug" ENABLED="true" CONFIG_NAME="Debug" TOOLCHAIN_NAME="clang-p2996">
+        <ADDITIONAL_GENERATION_ENVIRONMENT>
+          <envs>
+            <env name="LD_LIBRARY_PATH" value="/home/coder2k/dev/clang-p2996/build/lib/x86_64-unknown-linux-gnu" />
+          </envs>
+        </ADDITIONAL_GENERATION_ENVIRONMENT>
+      </configuration>
+      <configuration PROFILE_NAME="Release" ENABLED="true" CONFIG_NAME="Release" TOOLCHAIN_NAME="clang-p2996">
+        <ADDITIONAL_GENERATION_ENVIRONMENT>
+          <envs>
+            <env name="LD_LIBRARY_PATH" value="/home/coder2k/dev/clang-p2996/build/lib/x86_64-unknown-linux-gnu" />
+          </envs>
+        </ADDITIONAL_GENERATION_ENVIRONMENT>
+      </configuration>
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="68f0bdb1-450d-488b-bc33-324cbd777fb1" name="Changes" comment="fix: remove redundant casts and debug prints">
-      <change beforePath="$PROJECT_DIR$/src/lexer/lexer.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/lexer/lexer.hpp" afterDir="false" />
+    <list default="true" id="68f0bdb1-450d-488b-bc33-324cbd777fb1" name="Changes" comment="WIP: moved from `std::bitset` to `std::array`">
+      <change afterPath="$PROJECT_DIR$/src/lexer/CMakeLists.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pattern_generator/CMakeLists.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/token_types/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/editor.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/editor.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lexer/char_mask.hpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lexer/lexer.hpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lexer/pattern.hpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lexer/pattern_merging.hpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lexer/regex.hpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lexer/sequence_parser.hpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lexer/token.hpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lexer/token_definitions.hpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lexer/token_type.hpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/concepts.hpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/types.hpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/utils.hpp" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,6 +73,13 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="CMakeLists.txt" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
@@ -53,15 +96,10 @@
   }
 }</component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://D:/cpp/backseat-interpreter/src/lexer/lexer.hpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/lexer/lexer.hpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://D:/cpp/backseat-interpreter/src/lexer/token.hpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/lexer/token.hpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/main.cpp" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/utils/utils.hpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/cmake-build-debug/bin/generated/generated.hpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/lexer/main.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/pattern_generator/main.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/token_types/token_type.hpp" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="ProjectApplicationVersion">
     <option name="ide" value="CLion" />
@@ -79,10 +117,13 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "CMake Application.main.executor": "Run",
+    "CMake Application.lexer.executor": "Run",
+    "CMake Application.main.executor": "Debug",
+    "CMake Application.pattern_generator.executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.RadMigrateCodeStyle": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.cidr.known.project.marker": "true",
     "RunOnceActivity.git.unshallow": "true",
     "RunOnceActivity.readMode.enableVisualFormatting": "true",
@@ -94,16 +135,26 @@
     "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
     "last_opened_file_path": "D:/cpp/backseat-interpreter",
-    "settings.editor.selected.configurable": "CPPToolchains"
+    "settings.editor.selected.configurable": "CMakeSettings"
+  },
+  "keyToStringList": {
+    "com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File": [
+      "TEXT"
+    ]
   }
 }]]></component>
-  <component name="RunManager">
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\cpp\backseat-interpreter\src\token_types" />
+    </key>
+  </component>
+  <component name="RunManager" selected="CMake Application.lexer">
     <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="main" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="backseat_interpreter" TARGET_NAME="main" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="backseat_interpreter" RUN_TARGET_NAME="main">
+    <configuration name="lexer" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="backseat_interpreter" TARGET_NAME="lexer" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="backseat_interpreter" RUN_TARGET_NAME="lexer">
       <envs>
         <env name="LD_LIBRARY_PATH" value="/home/coder2k/dev/clang-p2996/build/lib/x86_64-unknown-linux-gnu" />
       </envs>
@@ -111,6 +162,30 @@
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
+    <configuration name="pattern_generator" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="test.hpp" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" WORKING_DIR="file://$PROJECT_DIR$" PASS_PARENT_ENVS_2="true" PROJECT_NAME="backseat_interpreter" TARGET_NAME="pattern_generator" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="backseat_interpreter" RUN_TARGET_NAME="pattern_generator">
+      <envs>
+        <env name="LD_LIBRARY_PATH" value="/home/coder2k/dev/clang-p2996/build/lib/x86_64-unknown-linux-gnu" />
+      </envs>
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="token_types" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="backseat_interpreter" TARGET_NAME="token_types" CONFIG_NAME="Debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="utils" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="backseat_interpreter" TARGET_NAME="utils" CONFIG_NAME="Debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="CMake Application.lexer" />
+      <item itemvalue="CMake Application.pattern_generator" />
+      <item itemvalue="CMake Application.token_types" />
+      <item itemvalue="CMake Application.utils" />
+    </list>
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -144,7 +219,103 @@
       <option name="project" value="LOCAL" />
       <updated>1753567036345</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="fix: remove redundant casts and debug prints">
+      <option name="closed" value="true" />
+      <created>1753567149558</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1753567149558</updated>
+    </task>
+    <task id="LOCAL-00005" summary="WIP">
+      <option name="closed" value="true" />
+      <created>1754741905289</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1754741905289</updated>
+    </task>
+    <task id="LOCAL-00006" summary="WIP">
+      <option name="closed" value="true" />
+      <created>1754750709594</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1754750709594</updated>
+    </task>
+    <task id="LOCAL-00007" summary="WIP">
+      <option name="closed" value="true" />
+      <created>1754750927980</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1754750927980</updated>
+    </task>
+    <task id="LOCAL-00008" summary="WIP: simplified construction of patterns">
+      <option name="closed" value="true" />
+      <created>1754814971893</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1754814971893</updated>
+    </task>
+    <task id="LOCAL-00009" summary="WIP: move `SequenceParser` into separate file">
+      <option name="closed" value="true" />
+      <created>1754815464098</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1754815464098</updated>
+    </task>
+    <task id="LOCAL-00010" summary="WIP">
+      <option name="closed" value="true" />
+      <created>1754844024326</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1754844024326</updated>
+    </task>
+    <task id="LOCAL-00011" summary="WIP: implement `EitherOf`">
+      <option name="closed" value="true" />
+      <created>1754845206263</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1754845206263</updated>
+    </task>
+    <task id="LOCAL-00012" summary="WIP: allow passing `Sequence` objects to `EitherOf`">
+      <option name="closed" value="true" />
+      <created>1754845292936</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1754845292936</updated>
+    </task>
+    <task id="LOCAL-00013" summary="WIP: restructure project and deduplicate resulting patterns">
+      <option name="closed" value="true" />
+      <created>1754849877879</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1754849877879</updated>
+    </task>
+    <task id="LOCAL-00014" summary="WIP">
+      <option name="closed" value="true" />
+      <created>1754924062124</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1754924062124</updated>
+    </task>
+    <task id="LOCAL-00015" summary="WIP: moved from `std::bitset` to `std::array`">
+      <option name="closed" value="true" />
+      <created>1754924803121</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1754924803121</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="VCPKGProject">
@@ -156,6 +327,13 @@
     <MESSAGE value="initial commit" />
     <MESSAGE value="fix: avoid generating duplicate `case` labels" />
     <MESSAGE value="fix: remove redundant casts and debug prints" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix: remove redundant casts and debug prints" />
+    <MESSAGE value="WIP: simplified construction of patterns" />
+    <MESSAGE value="WIP: move `SequenceParser` into separate file" />
+    <MESSAGE value="WIP: implement `EitherOf`" />
+    <MESSAGE value="WIP: allow passing `Sequence` objects to `EitherOf`" />
+    <MESSAGE value="WIP: restructure project and deduplicate resulting patterns" />
+    <MESSAGE value="WIP" />
+    <MESSAGE value="WIP: moved from `std::bitset` to `std::array`" />
+    <option name="LAST_COMMIT_MESSAGE" value="WIP: moved from `std::bitset` to `std::array`" />
   </component>
 </project>

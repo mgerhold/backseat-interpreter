@@ -1,7 +1,7 @@
-add_executable(main main.cpp
-        lexer/lexer.hpp
-        lexer/token.hpp
-        utils/utils.hpp
-        utils/types.hpp)
+set(GEN_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/generated")
+set(GEN_HEADER "${GEN_DIRECTORY}/generated.hpp")
 
-target_link_libraries(main backseat_interpreter_options)
+add_subdirectory(utils)
+add_subdirectory(token_types)
+add_subdirectory(pattern_generator)
+add_subdirectory(lexer)
