@@ -139,13 +139,13 @@ namespace lexer {{
     template for (constexpr auto token_type : std::define_static_array(enumerators_of(^^lexer::TokenType))) {
         static constexpr auto num_states = get_num_states_of_pattern<([: token_type :])>();
         template for (constexpr auto state_index : std::views::iota(0uz, num_states)) {
+            static constexpr auto transitions = get_transitions_array<([: token_type :]), state_index>();
             std::println(file.get(),
                 "        static constexpr auto transitions_{}_state{} = std::array<Transition, {}>{{",
                 display_string_of(token_type),
                 state_index,
-                num_states
+                transitions.size()
             );
-            static constexpr auto transitions = get_transitions_array<([: token_type :]), state_index>();
             for (auto const& transition : transitions) {
                 std::print(file.get(), "            Transition{{ CharMask{{ ");
                 auto const& char_mask = transition.char_mask;

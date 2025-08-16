@@ -45,27 +45,11 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="68f0bdb1-450d-488b-bc33-324cbd777fb1" name="Changes" comment="WIP: moved from `std::bitset` to `std::array`">
-      <change afterPath="$PROJECT_DIR$/src/lexer/CMakeLists.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pattern_generator/CMakeLists.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/token_types/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/editor.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/editor.xml" afterDir="false" />
+    <list default="true" id="68f0bdb1-450d-488b-bc33-324cbd777fb1" name="Changes" comment="feat: generate data structures for state machine to file">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lexer/char_mask.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lexer/lexer.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lexer/pattern.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lexer/pattern_merging.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lexer/regex.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lexer/sequence_parser.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lexer/token.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lexer/token_definitions.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lexer/token_type.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/concepts.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/types.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/utils.hpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lexer/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/lexer/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pattern_generator/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/pattern_generator/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pattern_generator/token_definitions.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/pattern_generator/token_definitions.hpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -82,6 +66,7 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RESET_MODE" value="MIXED" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
   &quot;lastFilter&quot;: {
@@ -117,7 +102,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "CMake Application.lexer.executor": "Run",
+    "CMake Application.lexer.executor": "Debug",
     "CMake Application.main.executor": "Debug",
     "CMake Application.pattern_generator.executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
@@ -315,13 +300,32 @@
       <option name="project" value="LOCAL" />
       <updated>1754924803121</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="feat: generate data structures for state machine to file">
+      <option name="closed" value="true" />
+      <created>1755348398841</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1755348398841</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="VCPKGProject">
     <isAutomaticCheckingOnLaunch value="false" />
     <isAutomaticFoundErrors value="true" />
     <isAutomaticReloadCMake value="true" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="initial commit" />
@@ -334,6 +338,7 @@
     <MESSAGE value="WIP: restructure project and deduplicate resulting patterns" />
     <MESSAGE value="WIP" />
     <MESSAGE value="WIP: moved from `std::bitset` to `std::array`" />
-    <option name="LAST_COMMIT_MESSAGE" value="WIP: moved from `std::bitset` to `std::array`" />
+    <MESSAGE value="feat: generate data structures for state machine to file" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: generate data structures for state machine to file" />
   </component>
 </project>

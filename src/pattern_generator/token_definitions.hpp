@@ -150,7 +150,12 @@ namespace lexer {
             },
             PatternDescription{
                 TokenType::Whitespace,
-                Sequence{ CharSet{ ' ', '\f', '\n', '\r', '\t', '\v' } },
+                Sequence{
+                    CharSet{ ' ', '\f', '\n', '\r', '\t', '\v' },
+                    ZeroOrMoreOf{
+                        CharSet{ ' ', '\f', '\n', '\r', '\t', '\v' },
+                    },
+                },
                 false,
             },
         };
