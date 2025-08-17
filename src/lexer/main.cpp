@@ -24,30 +24,6 @@ auto print_char_mask(lexer::CharMask const& mask) -> void {
 }
 
 auto main() -> int {
-    /*std::println("There are {} patterns.", lexer::patterns.size());
-    template for (constexpr auto token_type : std::define_static_array(enumerators_of(^^lexer::TokenType))) {
-        auto const& pattern = lexer::patterns.at(static_cast<usize>([: token_type :]));
-        std::print("\n    {}:", display_string_of(token_type));
-        if (not pattern.should_emit) {
-            std::print(" (discarded)");
-        }
-        std::println();
-
-        for (auto const i : std::views::iota(0uz, pattern.states.size())) {
-            auto const& state = pattern.states.at(i);
-            std::print("      [State {}]", i, state.transitions.size());
-            if (state.is_final) {
-                std::print(" (final)");
-            }
-            std::println();
-
-            for (auto const& transition : state.transitions) {
-                std::print("        ");
-                print_char_mask(transition.char_mask);
-                std::println(" -> [State {}]", transition.next_state);
-            }
-        }
-    }*/
     auto const path = std::filesystem::path{ "source.bs" };
     auto const filename = std::string_view{ path.c_str() };
     auto const source = utils::read_file(path);
