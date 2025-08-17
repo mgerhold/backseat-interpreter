@@ -141,7 +141,7 @@ namespace lexer {{
         template for (constexpr auto state_index : std::views::iota(0uz, num_states)) {
             static constexpr auto transitions = get_transitions_array<([: token_type :]), state_index>();
             std::println(file.get(),
-                "        static constexpr auto transitions_{}_state{} = std::array<Transition, {}>{{",
+                "        inline constexpr auto transitions_{}_state{} = std::array<Transition, {}>{{",
                 display_string_of(token_type),
                 state_index,
                 transitions.size()
@@ -177,7 +177,7 @@ namespace lexer {{
         std::println(file.get(), "");
     }
     template for (constexpr auto token_type : std::define_static_array(enumerators_of(^^lexer::TokenType))) {
-        std::println(file.get(), "        static constexpr auto states_{} = std::array{{", display_string_of(token_type));
+        std::println(file.get(), "        inline constexpr auto states_{} = std::array{{", display_string_of(token_type));
         static constexpr auto num_states = get_num_states_of_pattern<([: token_type :])>();
         template for (constexpr auto state_index : std::views::iota(0uz, num_states)) {
             static constexpr auto is_final = is_state_final<([: token_type :]), state_index>();
@@ -193,7 +193,7 @@ namespace lexer {{
     }
 
     template for (constexpr auto token_type : std::define_static_array(enumerators_of(^^lexer::TokenType))) {
-        std::println(file.get(), "        static constexpr auto pattern_{} = Pattern{{", display_string_of(token_type));
+        std::println(file.get(), "        inline constexpr auto pattern_{} = Pattern{{", display_string_of(token_type));
         std::println(file.get(), "            std::span<State const>{{ states_{} }},", display_string_of(token_type));
         std::println(file.get(), "            {},", should_emit<([: token_type :])>() ? "true" : "false");
         std::println(file.get(), "        }};");
@@ -201,7 +201,7 @@ namespace lexer {{
     }
     std::println(file.get(), "    }} // namespace detail");
     std::println(file.get(), "");
-    std::println(file.get(), "    static constexpr auto patterns = std::array{{");
+    std::println(file.get(), "    inline constexpr auto patterns = std::array{{");
     template for (constexpr auto token_type : std::define_static_array(enumerators_of(^^lexer::TokenType))) {
         std::println(file.get(), "        detail::pattern_{},", display_string_of(token_type));
     }
