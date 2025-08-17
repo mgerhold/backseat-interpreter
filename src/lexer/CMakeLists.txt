@@ -3,6 +3,10 @@ message("Gen header is: ${GEN_HEADER}")
 add_executable(lexer
     main.cpp
     "${GEN_HEADER}"
+    lexer.hpp
+    lexer.cpp
+    token.hpp
+        source_location.hpp
 )
 
 add_custom_command(

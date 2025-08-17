@@ -105,12 +105,6 @@ namespace lexer {
                 },
                 true,
             },
-            PatternDescription{ TokenType::Bool, Sequence{ "Bool" }, true },
-            PatternDescription{ TokenType::I64, Sequence{ "I64" }, true },
-            PatternDescription{ TokenType::U64, Sequence{ "U64" }, true },
-            PatternDescription{ TokenType::String, Sequence{ "String" }, true },
-            PatternDescription{ TokenType::Nothing, Sequence{ "Nothing" }, true },
-            PatternDescription{ TokenType::Never, Sequence{ "Never" }, true },
             PatternDescription{
                 TokenType::BoolLiteral,
                 Sequence{
@@ -152,9 +146,6 @@ namespace lexer {
                 TokenType::Whitespace,
                 Sequence{
                     CharSet{ ' ', '\f', '\n', '\r', '\t', '\v' },
-                    ZeroOrMoreOf{
-                        CharSet{ ' ', '\f', '\n', '\r', '\t', '\v' },
-                    },
                 },
                 false,
             },

@@ -1,10 +1,10 @@
 #pragma once
 
+#include <utils/types.hpp>
+
 namespace lexer {
 
-    enum class TokenType {
-        LowercaseIdentifier,
-        UppercaseIdentifier,
+    enum class TokenType : usize {
         LowercaseFunction,
         Colon,
         Comma,
@@ -26,12 +26,6 @@ namespace lexer {
         UnsignedIntegerLiteral,
         CharLiteral,
         StringLiteral,
-        Bool,
-        I64,
-        U64,
-        String,
-        Nothing,
-        Never,
         BoolLiteral,
         And,
         Or,
@@ -57,6 +51,8 @@ namespace lexer {
         UppercaseFunction,
         LineComment,
         Whitespace,
+        LowercaseIdentifier,
+        UppercaseIdentifier,
     };
 
 } // namespace lexer
