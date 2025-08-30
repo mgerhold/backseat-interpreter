@@ -3,6 +3,7 @@
 #include <type_traits>
 #include <string_view>
 #include "types.hpp"
+#include <experimental/meta>
 
 namespace utils {
     [[nodiscard]] auto constexpr enum_to_string(auto const value) -> std::string_view

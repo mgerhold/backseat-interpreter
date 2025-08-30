@@ -1,12 +1,11 @@
 message("Gen header is: ${GEN_HEADER}")
 
-add_executable(lexer
-    main.cpp
+add_library(lexer STATIC
     "${GEN_HEADER}"
-    lexer.hpp
+    include/lexer/lexer.hpp
+    include/lexer/token.hpp
     lexer.cpp
-    token.hpp
-        source_location.hpp
+    source_location.hpp
 )
 
 add_custom_command(
@@ -20,5 +19,5 @@ add_custom_command(
 
 set_source_files_properties("${GEN_HEADER}" PROPERTIES GENERATED TRUE)
 
-target_include_directories(lexer PRIVATE "${GEN_DIRECTORY}")
+target_include_directories(lexer PRIVATE "${GEN_DIRECTORY}" PUBLIC include)
 target_link_libraries(lexer PUBLIC utils backseat_interpreter_options token_types)

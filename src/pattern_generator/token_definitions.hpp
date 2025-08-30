@@ -13,22 +13,8 @@ namespace lexer {
 
     [[nodiscard]] consteval auto get_pattern_descriptions() -> auto {
         return std::array{
-            PatternDescription{
-                TokenType::LowercaseIdentifier,
-                Sequence{
-                    Range{ 'a', 'z' } | '_',
-                    ZeroOrMoreOf{ Range{ 'a', 'z' } | Range{ 'A', 'Z' } | Range{ '0', '9' } | '_' },
-                },
-                true,
-            },
-            PatternDescription{
-                TokenType::UppercaseIdentifier,
-                Sequence{
-                    Range{ 'A', 'Z' },
-                    ZeroOrMoreOf{ Range{ 'a', 'z' } | Range{ 'A', 'Z' } | Range{ '0', '9' } | '_' },
-                },
-                true,
-            },
+            PatternDescription{ TokenType::Print, Sequence{ "print" }, true },
+            PatternDescription{ TokenType::Println, Sequence{ "println" }, true },
             PatternDescription{ TokenType::LowercaseFunction, Sequence{ "function" }, true },
             PatternDescription{ TokenType::Colon, Sequence{ ':' }, true },
             PatternDescription{ TokenType::Comma, Sequence{ ',' }, true },
@@ -137,6 +123,22 @@ namespace lexer {
             PatternDescription{ TokenType::Return, Sequence{ "return" }, true },
             PatternDescription{ TokenType::NothingLiteral, Sequence{ "nothing" }, true },
             PatternDescription{ TokenType::UppercaseFunction, Sequence{ "Function" }, true },
+            PatternDescription{
+                TokenType::LowercaseIdentifier,
+                Sequence{
+                    Range{ 'a', 'z' } | '_',
+                    ZeroOrMoreOf{ Range{ 'a', 'z' } | Range{ 'A', 'Z' } | Range{ '0', '9' } | '_' },
+                },
+                true,
+            },
+            PatternDescription{
+                TokenType::UppercaseIdentifier,
+                Sequence{
+                    Range{ 'A', 'Z' },
+                    ZeroOrMoreOf{ Range{ 'a', 'z' } | Range{ 'A', 'Z' } | Range{ '0', '9' } | '_' },
+                },
+                true,
+            },
             PatternDescription{
                 TokenType::LineComment,
                 Sequence{ '/', '/', ZeroOrMoreOf{ CharSet{ '\n', '\0' }.inverse() } },

@@ -1,0 +1,8 @@
+println("Hello, world!");
+println("Test all escape sequences:");
+println("'n': '\n'");
+println("'t': '\t'");
+println("'f': '\f'");
+println("'r': '\r'");
+println("backslash: '\\'");
+println("quotes: '\"'");

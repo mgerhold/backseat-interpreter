@@ -1,12 +1,12 @@
-#include "lexer.hpp"
-#include <generated.hpp>
+#include <lexer/lexer.hpp>
 #include <array>
-#include <ranges>
-#include <utility>
 #include <experimental/meta>
+#include <generated.hpp>
 #include <optional>
 #include <print>
+#include <ranges>
 #include <stdexcept>
+#include <utility>
 
 namespace lexer {
     struct PatternState final {

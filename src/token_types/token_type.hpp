@@ -5,6 +5,8 @@
 namespace lexer {
 
     enum class TokenType : usize {
+        Print,
+        Println,
         LowercaseFunction,
         Colon,
         Comma,
