@@ -20,10 +20,6 @@ namespace type_checker {
         Expression& operator=(Expression&& other) noexcept = default;
         virtual ~Expression() = default;
 
-        [[nodiscard]] virtual auto as_string_literal() const -> tl::optional<StringLiteral const&> {
-            return tl::nullopt;
-        }
-
         [[nodiscard]] auto data_type() const -> DataType const& {
             return *m_data_type;
         }
@@ -37,10 +33,6 @@ namespace type_checker {
         [[nodiscard]] explicit StringLiteral(lexer::Token const& token)
             : Expression{ std::make_unique<String>() },
               m_token{ token } { }
-
-        [[nodiscard]] auto as_string_literal() const -> tl::optional<StringLiteral const&> override {
-            return *this;
-        }
 
         [[nodiscard]] auto to_escaped_string() const -> std::string {
             static constexpr auto escape_characters = std::array{
