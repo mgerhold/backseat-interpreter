@@ -4,8 +4,8 @@ add_library(lexer STATIC
     "${GEN_HEADER}"
     include/lexer/lexer.hpp
     include/lexer/token.hpp
+    include/lexer/source_location.hpp
     lexer.cpp
-    source_location.hpp
 )
 
 add_custom_command(

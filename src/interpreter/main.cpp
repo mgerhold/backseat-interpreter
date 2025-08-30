@@ -4,6 +4,15 @@
 #include <lexer/lexer.hpp>
 #include <parser/parser.hpp>
 #include "interpreter.hpp"
+#include <utils/pretty_printer.hpp>
+
+struct Parent {
+    int a = 10;
+};
+
+struct Child {
+    int b = 20;
+};
 
 int main() {
     try {
@@ -12,8 +21,11 @@ int main() {
         auto const tokens = lexer::tokenize(path, contents.value());
         auto parse_tree = parser::parse(tokens);
         auto ast = type_checker::check_types(std::move(parse_tree));
+        pretty_print(ast);
         auto interpreter = interpreter::Interpreter{ std::move(ast) };
         interpreter.run();
+
+
     } catch (std::exception const& e) {
         std::println("{}", e.what());
     } catch (...) {
