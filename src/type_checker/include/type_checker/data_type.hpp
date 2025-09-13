@@ -16,9 +16,7 @@ namespace type_checker {
         DataType& operator=(DataType&& other) noexcept = default;
         virtual ~DataType() = default;
 
-        [[nodiscard]] virtual auto as_builtin_type() const -> tl::optional<BuiltinDataType> {
-            return tl::nullopt;
-        }
+        [[nodiscard]] virtual auto as_builtin_type() const -> tl::optional<BuiltinDataType> = 0;
     };
 
     class String final : public DataType {

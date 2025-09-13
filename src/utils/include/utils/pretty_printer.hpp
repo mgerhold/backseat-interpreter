@@ -7,6 +7,7 @@
 #include <experimental/meta>
 #include <type_checker/statements.hpp>
 #include <utils/enum_to_string.hpp>
+#include <tl/optional.hpp>
 
 [[nodiscard]] consteval auto children_of(std::meta::info const base_type) -> std::vector<std::meta::info> {
     auto parent_namespace = parent_of(base_type);
@@ -66,6 +67,57 @@ template<typename T>
 }
 
 template<typename T>
+[[nodiscard]] consteval auto get_parent() -> std::meta::info {
+    static constexpr auto context = std::meta::access_context::current();
+    static constexpr auto bases = std::define_static_array(bases_of(dealias(^^T), context));
+    if constexpr (bases.empty()) {
+        return ^^T;
+    } else if constexpr (bases.size() > 1uz) {
+        throw std::logic_error{ "Multiple inheritance is not supported." };
+    } else {
+        using Base = [: type_of(bases.front()) :];
+        return get_parent<Base>();
+    }
+}
+
+template<typename T>
+consteval auto get_all_types_in_hierarchy(std::vector<std::meta::info>& types) -> void {
+    template for (constexpr auto child : std::define_static_array(children_of(^^T))) {
+        types.push_back(child);
+        get_all_types_in_hierarchy<typename [: child :]>(types);
+    }
+}
+
+template<typename T>
+consteval auto get_all_types_in_hierarchy() -> std::vector<std::meta::info> {
+    auto types = std::vector<std::meta::info>{};
+    get_all_types_in_hierarchy<T>(types);
+    return types;
+}
+
+[[nodiscard]] consteval auto get_inheritance_chain(std::meta::info base, std::meta::info derived) -> std::vector<std::meta::info> {
+    static constexpr auto context = std::meta::access_context::current();
+    auto const bases = bases_of(dealias(derived), context);
+    if (is_same_type(base, derived)) {
+        return std::vector{ base };
+    }
+    if (bases.empty()) {
+        throw std::logic_error{ "Class has no base class." };
+    }
+    if (bases.size() != 1uz) {
+        throw std::logic_error{ "Multiple inheritance is not supported." };
+    }
+    auto chain = get_inheritance_chain(base, type_of(bases.front()));
+    chain.push_back(dealias(derived));
+    return chain;
+}
+
+template<typename Derived>
+[[nodiscard]] consteval auto get_inheritance_chain() -> std::vector<std::meta::info> {
+    return get_inheritance_chain(get_parent<Derived>(), ^^Derived);
+}
+
+template<typename T>
 auto pretty_print(
     T&& object,
     usize const indentation = 0uz,
@@ -101,44 +153,67 @@ auto pretty_print(
         }
         std::print("{:{}}]", "", indentation);
     } else if constexpr (is_class_type(dealias(^^Type)) and parent_of(^^Type) != ^^std) {
-        auto const maybe_downcasted = try_downcast(object);
-        auto const can_be_downcasted = not std::holds_alternative<typename [: dealias(^^Type) :] const*>(maybe_downcasted);
-
-        if constexpr (has_identifier(dealias(^^Type))) {
-            std::println("{}{{", identifier_of(dealias(^^Type)));
-        } else {
-            // std::println("<anonymous type>{{");
-            std::println("{}{{", display_string_of(dealias(^^Type)));
-        }
-        static constexpr auto context = std::meta::access_context::current();
-        template for (constexpr auto member : std::define_static_array(nonstatic_data_members_of(dealias(^^Type), context))) {
-            std::print("{:{}}{}: ", "", indentation + 2uz, identifier_of(member));
-            pretty_print(object.[: member :], indentation + 2uz, false);
-            std::println(",");
-        }
-
-        template for (constexpr auto member : std::define_static_array(members_of(dealias(^^Type), context))) {
-            if constexpr (
-                has_identifier(member)
-                and is_function(member)
-                and is_const(member)
-                and requires { { object.[: member :]() }; }
-            ) {
-                std::print("{:{}}{}(): ", "", indentation + 2uz, identifier_of(member));
-                auto&& value = object.[: member :]();
-                pretty_print(std::forward<decltype(value)>(value), indentation + 2uz, false);
-                std::println(",");
+        using Parent = [: get_parent<Type>() :];
+        [[maybe_unused]] Parent* _;
+        auto type_index = 0uz;
+        auto max_chain_length = std::optional<usize>{};
+        auto max_chain_length_type_index = std::optional<usize>{};
+        template for (constexpr auto type : std::define_static_array(get_all_types_in_hierarchy<typename [: get_parent<Type>() :]>())) {
+            auto const maybe_downcasted = dynamic_cast<[: type :] const*>(std::addressof(object));
+            if (maybe_downcasted != nullptr) {
+                static constexpr auto chain = std::define_static_array(get_inheritance_chain<typename [: type :]>());
+                static constexpr auto chain_size = chain.size();
+                if (not max_chain_length.has_value() or max_chain_length.value() < chain_size) {
+                    max_chain_length = chain_size;
+                    max_chain_length_type_index = type_index;
+                }
             }
+            ++type_index;
         }
-        std::print("{:{}}}}", "", indentation);
 
-        if (can_be_downcasted) {
-            std::visit(
-                [&](auto const child_pointer) {
-                    pretty_print(*child_pointer, indentation, false);
-                },
-                maybe_downcasted
-            );
+        type_index = 0uz;
+        template for (constexpr auto type : std::define_static_array(get_all_types_in_hierarchy<typename [: get_parent<Type>() :]>())) {
+            if (type_index == max_chain_length_type_index) {
+                static constexpr auto chain = std::define_static_array(get_inheritance_chain<typename [: type :]>());
+                auto is_first = true;
+                template for (constexpr auto type_in_chain : chain) {
+                    if (not is_first) {
+                        std::print("<-");
+                    }
+                    std::print("{}", identifier_of(type_in_chain));
+                    is_first = false;
+                }
+                std::println("{{");
+                template for (constexpr auto type_in_chain : chain) {
+                    static constexpr auto context = std::meta::access_context::current();
+                    template for (constexpr auto member : std::define_static_array(nonstatic_data_members_of(dealias(type_in_chain), context))) {
+                        std::print("{:{}}{}: ", "", indentation + 2uz, identifier_of(member));
+                        pretty_print(object.[: member :], indentation + 2uz, false);
+                        std::println(",");
+                    }
+                    auto const downcasted = dynamic_cast<[: type_in_chain :] const*>(std::addressof(object));
+                    if (downcasted == nullptr) {
+                        throw std::logic_error{ "Unreachable" };
+                    }
+                    auto const& object = *downcasted; // Shadowing the outer variable.
+                    template for (constexpr auto member : std::define_static_array(members_of(dealias(type_in_chain), context))) {
+                        if constexpr (
+                            has_identifier(member)
+                            and is_function(member)
+                            and is_const(member)
+                            and not is_pure_virtual(member)
+                            and requires { { object.[: member :]() }; }
+                        ) {
+                            std::print("{:{}}{}(): ", "", indentation + 2uz, identifier_of(member));
+                            auto&& value = object.[: member :]();
+                            pretty_print(std::forward<decltype(value)>(value), indentation + 2uz, false);
+                            std::println(",");
+                        }
+                    }
+                }
+                std::print("{:{}}}}", "", indentation);
+            }
+            ++type_index;
         }
     }
     if (print_ending_newline) {
