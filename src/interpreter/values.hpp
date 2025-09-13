@@ -26,4 +26,16 @@ namespace interpreter {
         }
     };
 
+    class U64 final : public Value {
+    private:
+        std::uint64_t m_value;
+
+    public:
+        [[nodiscard]] explicit U64(std::uint64_t const value) : m_value{ value } { }
+
+        [[nodiscard]] auto value() const -> std::uint64_t {
+            return m_value;
+        }
+    };
+
 } // namespace interpreter

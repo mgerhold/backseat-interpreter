@@ -4,6 +4,7 @@
 #include <lexer/token.hpp>
 #include <memory>
 #include <algorithm>
+#include <charconv>
 
 namespace type_checker {
     class StringLiteral;
@@ -78,6 +79,27 @@ namespace type_checker {
             }
 
             return result;
+        }
+    };
+
+    class UnsignedIntegerLiteral final : public Expression {
+    private:
+        lexer::Token m_token;
+
+    public:
+        [[nodiscard]] explicit UnsignedIntegerLiteral(lexer::Token const& token)
+            : Expression{ std::make_unique<U64>() },
+              m_token{ token } { }
+
+        [[nodiscard]] auto value() const -> std::uint64_t {
+            static constexpr auto suffix_length = std::string_view{ "_u64" }.length();
+            auto const without_suffix = m_token.source_location().lexeme().substr(0, m_token.source_location().length() - suffix_length);
+            auto value = std::uint64_t{};
+            auto const [_, ec] = std::from_chars(without_suffix.data(), without_suffix.data() + without_suffix.length(), value);
+            if (ec != std::errc{}) {
+                throw std::runtime_error{ "Invalid unsigned integer literal (lexer bug?)." };
+            }
+            return value;
         }
     };
 } // namespace type_checker

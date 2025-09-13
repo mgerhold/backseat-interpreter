@@ -8,7 +8,10 @@ namespace type_checker {
         auto checked_expression = check_child_types<parser::Expression, Expression>(argument);
         if (
             not checked_expression->data_type().as_builtin_type().has_value()
-            or checked_expression->data_type().as_builtin_type().value() != BuiltinDataType::String
+            or (
+                checked_expression->data_type().as_builtin_type().value() != BuiltinDataType::String
+                and checked_expression->data_type().as_builtin_type().value() != BuiltinDataType::U64
+            )
         ) {
             throw InvalidTypeError{ "println statement expects String argument." };
         }

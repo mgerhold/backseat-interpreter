@@ -3,6 +3,7 @@ add_library(parser STATIC
     parser.cpp
     include/parser/statements.hpp
     include/parser/expressions.hpp
+        include/parser/error.hpp
 )
 
 target_include_directories(parser PUBLIC include)

@@ -5,6 +5,7 @@
 #include <experimental/meta>
 #include <print>
 #include "values.hpp"
+#include "error.hpp"
 
 namespace interpreter {
 
@@ -26,8 +27,22 @@ namespace interpreter {
     private:
         auto interpret(type_checker::Println const& statement) -> void {
             auto const value = evaluate_expression(*statement.argument());
-            auto const& string_value = dynamic_cast<interpreter::String const&>(*value);
-            std::println("{}", string_value.data());
+            auto const builtin_type = statement.argument()->data_type().as_builtin_type();
+            if (not builtin_type.has_value()) {
+                throw InterpreterError{ "Expected builtin data type." };
+            }
+            switch (builtin_type.value()) {
+                using enum type_checker::BuiltinDataType;
+
+                case String:
+                    std::println("{}", dynamic_cast<interpreter::String const&>(*value).data());
+                    break;
+                case U64:
+                    std::println("{}", dynamic_cast<interpreter::U64 const&>(*value).value());
+                    break;
+                default:
+                    throw InterpreterError{ "Unsupported builtin data type." };
+            }
         }
 
         auto interpret_statement(type_checker::Statement const& statement) -> void {
@@ -50,6 +65,10 @@ namespace interpreter {
 
         auto evaluate(type_checker::StringLiteral const& expression) -> std::unique_ptr<Value> {
             return std::make_unique<String>(expression.to_escaped_string());
+        }
+
+        auto evaluate(type_checker::UnsignedIntegerLiteral const& expression) -> std::unique_ptr<Value> {
+            return std::make_unique<U64>(expression.value());
         }
 
         auto evaluate_expression(type_checker::Expression const& statement) -> std::unique_ptr<Value> {

@@ -5,11 +5,6 @@
 
 
 namespace parser {
-    class ParserError final : public std::runtime_error {
-    public:
-        [[nodiscard]] explicit ParserError(std::string const& basic_string) : runtime_error{ basic_string } { }
-    };
-
     class Parser final {
     private:
         std::span<lexer::Token const> m_tokens;
@@ -85,6 +80,9 @@ namespace parser {
             using lexer::TokenType;
             if (auto const string_literal_token = match(TokenType::StringLiteral)) {
                 return std::make_unique<StringLiteral>(string_literal_token.value());
+            }
+            if (auto const unsigned_integer_token = match(TokenType::UnsignedIntegerLiteral)) {
+                return std::make_unique<UnsignedIntegerLiteral>(unsigned_integer_token.value());
             }
             throw ParserError{ std::format("Expected expression, got '{}'.", utils::enum_to_string(current().type())) };
         }

@@ -12,6 +12,10 @@ namespace type_checker {
         return std::make_unique<StringLiteral>(expression.token());
     }
 
+    [[nodiscard]] inline auto check_types(parser::UnsignedIntegerLiteral const& expression) -> std::unique_ptr<Expression> {
+        return std::make_unique<UnsignedIntegerLiteral>(expression.token());
+    }
+
     [[nodiscard]] inline auto check_types(parser::Println const& statement) -> std::unique_ptr<Statement> {
         return std::make_unique<Println>(statement.argument());
     }

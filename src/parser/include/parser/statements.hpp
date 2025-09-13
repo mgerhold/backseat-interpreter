@@ -1,6 +1,7 @@
 #pragma once
 
 #include "expressions.hpp"
+#include "error.hpp"
 #include <memory>
 
 namespace parser {

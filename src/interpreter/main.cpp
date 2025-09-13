@@ -24,11 +24,11 @@ int main() {
         pretty_print(ast);
         auto interpreter = interpreter::Interpreter{ std::move(ast) };
         interpreter.run();
-
-
     } catch (std::exception const& e) {
         std::println("{}", e.what());
+        return EXIT_FAILURE;
     } catch (...) {
         std::println("Unexpected exception.");
+        return EXIT_FAILURE;
     }
 }

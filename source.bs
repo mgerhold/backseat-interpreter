@@ -6,3 +6,5 @@ println("'f': '\f'");
 println("'r': '\r'");
 println("backslash: '\\'");
 println("quotes: '\"'");
+println(42_u64);
+println(1337_u64);

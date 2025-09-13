@@ -5,6 +5,7 @@
 namespace type_checker {
     enum class BuiltinDataType {
         String,
+        U64,
     };
 
     class DataType {
@@ -23,6 +24,12 @@ namespace type_checker {
     public:
         [[nodiscard]] auto as_builtin_type() const -> tl::optional<BuiltinDataType> override {
             return BuiltinDataType::String;
+        }
+    };
+
+    class U64 final : public DataType {
+        [[nodiscard]] auto as_builtin_type() const -> tl::optional<BuiltinDataType> override {
+            return BuiltinDataType::U64;
         }
     };
 }
