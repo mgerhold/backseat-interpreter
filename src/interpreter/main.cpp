@@ -6,14 +6,6 @@
 #include "interpreter.hpp"
 #include <utils/pretty_printer.hpp>
 
-struct Parent {
-    int a = 10;
-};
-
-struct Child {
-    int b = 20;
-};
-
 int main() {
     try {
         static constexpr auto path = std::string_view{ "source.bs" };
