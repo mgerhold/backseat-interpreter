@@ -1,12 +1,12 @@
-#include <format>
-#include <parser/parser.hpp>
-#include <tl/optional.hpp>
-#include <utils/enum_to_string.hpp>
-#include <token_type.hpp>
-#include <memory>
-#include "precedence.hpp"
 #include "parser_table.hpp"
+#include "precedence.hpp"
+#include <format>
+#include <memory>
+#include <parser/parser.hpp>
 #include <parser/statements.hpp>
+#include <tl/optional.hpp>
+#include <token_type.hpp>
+#include <utils/enum_to_string.hpp>
 
 namespace parser {
 
@@ -85,10 +85,7 @@ namespace parser {
             auto const prefix_parser = current_table_record().prefix_parser;
             if (prefix_parser == nullptr) {
                 throw ParserError{
-                    std::format(
-                        "Unexpected token of type '{}'.",
-                        utils::enum_to_string(current().type())
-                    )
+                    std::format("Unexpected token of type '{}'.", utils::enum_to_string(current().type()))
                 };
             }
             auto first_operand = std::invoke(prefix_parser, *this);
@@ -111,64 +108,73 @@ namespace parser {
             return std::make_unique<UnsignedIntegerLiteral>(expect(lexer::TokenType::UnsignedIntegerLiteral));
         }
 
-        // clang-format off
+        [[nodiscard]] auto binary(std::unique_ptr<Expression> left_operand) -> std::unique_ptr<Expression> {
+            auto const [_, _, precedence] = current_table_record();
+            auto const operator_token = advance();
+            auto right_operand = expression(precedence);
+            return std::make_unique<BinaryOperator>(std::move(left_operand), operator_token, std::move(right_operand));
+        }
+
         static inline auto parser_table = create_parser_table(
-            ParserTableEntry<lexer::TokenType::Print>                 { nullptr,                   nullptr,         Precedence::Unknown },
-            ParserTableEntry<lexer::TokenType::Println>               { nullptr,                   nullptr,         Precedence::Unknown },
-            ParserTableEntry<lexer::TokenType::LowercaseFunction>     { nullptr,                   nullptr,         Precedence::Unknown },
-            ParserTableEntry<lexer::TokenType::Colon>                 { nullptr,                   nullptr,         Precedence::Unknown },
-            ParserTableEntry<lexer::TokenType::Comma>                 { nullptr,                   nullptr,         Precedence::Unknown },
-            ParserTableEntry<lexer::TokenType::TildeArrow>            { nullptr,                   nullptr,         Precedence::Unknown },
-            ParserTableEntry<lexer::TokenType::EndOfFile>             { nullptr,                   nullptr,         Precedence::Unknown },
-            ParserTableEntry<lexer::TokenType::Semicolon>             { nullptr,                   nullptr,         Precedence::Unknown },
-            ParserTableEntry<lexer::TokenType::Plus>                  { nullptr,                   nullptr,         Precedence::Unknown },
-            ParserTableEntry<lexer::TokenType::Minus>                 { nullptr,                   nullptr,         Precedence::Unknown },
-            ParserTableEntry<lexer::TokenType::Asterisk>              { nullptr,                   nullptr,         Precedence::Unknown },
-            ParserTableEntry<lexer::TokenType::Mod>                   { nullptr,                   nullptr,         Precedence::Unknown },
-            ParserTableEntry<lexer::TokenType::ForwardSlash>          { nullptr,                   nullptr,         Precedence::Unknown },
-            ParserTableEntry<lexer::TokenType::LeftParenthesis>       { nullptr,                   nullptr,         Precedence::Unknown },
-            ParserTableEntry<lexer::TokenType::RightParenthesis>      { nullptr,                   nullptr,         Precedence::Unknown },
-            ParserTableEntry<lexer::TokenType::LeftCurlyBracket>      { nullptr,                   nullptr,         Precedence::Unknown },
-            ParserTableEntry<lexer::TokenType::RightCurlyBracket>     { nullptr,                   nullptr,         Precedence::Unknown },
-            ParserTableEntry<lexer::TokenType::Let>                   { nullptr,                   nullptr,         Precedence::Unknown },
-            ParserTableEntry<lexer::TokenType::Equals>                { nullptr,                   nullptr,         Precedence::Unknown },
-            ParserTableEntry<lexer::TokenType::SignedIntegerLiteral>  { nullptr,                   nullptr,         Precedence::Unknown },
-            ParserTableEntry<lexer::TokenType::UnsignedIntegerLiteral>{
-                &Parser::unsigned_integer_literal,
-                nullptr,
-                Precedence::Unknown
-            },
-            ParserTableEntry<lexer::TokenType::CharLiteral>           { nullptr,                   nullptr,         Precedence::Unknown },
-            ParserTableEntry<lexer::TokenType::StringLiteral>         { &Parser::string_literal,   nullptr,         Precedence::Unknown },
-            ParserTableEntry<lexer::TokenType::BoolLiteral>           { nullptr,                   nullptr,         Precedence::Unknown },
-            ParserTableEntry<lexer::TokenType::And>                   { nullptr,                   nullptr,         Precedence::Unknown },
-            ParserTableEntry<lexer::TokenType::Or>                    { nullptr,                   nullptr,         Precedence::Unknown },
-            ParserTableEntry<lexer::TokenType::Not>                   { nullptr,                   nullptr,         Precedence::Unknown },
-            ParserTableEntry<lexer::TokenType::If>                    { nullptr,                   nullptr,         Precedence::Unknown },
-            ParserTableEntry<lexer::TokenType::Else>                  { nullptr,                   nullptr,         Precedence::Unknown },
-            ParserTableEntry<lexer::TokenType::Loop>                  { nullptr,                   nullptr,         Precedence::Unknown },
-            ParserTableEntry<lexer::TokenType::Break>                 { nullptr,                   nullptr,         Precedence::Unknown },
-            ParserTableEntry<lexer::TokenType::Continue>              { nullptr,                   nullptr,         Precedence::Unknown },
-            ParserTableEntry<lexer::TokenType::While>                 { nullptr,                   nullptr,         Precedence::Unknown },
-            ParserTableEntry<lexer::TokenType::Do>                    { nullptr,                   nullptr,         Precedence::Unknown },
-            ParserTableEntry<lexer::TokenType::For>                   { nullptr,                   nullptr,         Precedence::Unknown },
-            ParserTableEntry<lexer::TokenType::Mutable>               { nullptr,                   nullptr,         Precedence::Unknown },
-            ParserTableEntry<lexer::TokenType::Const>                 { nullptr,                   nullptr,         Precedence::Unknown },
-            ParserTableEntry<lexer::TokenType::EqualsEquals>          { nullptr,                   nullptr,         Precedence::Unknown },
-            ParserTableEntry<lexer::TokenType::ExclamationEquals>     { nullptr,                   nullptr,         Precedence::Unknown },
-            ParserTableEntry<lexer::TokenType::GreaterThan>           { nullptr,                   nullptr,         Precedence::Unknown },
-            ParserTableEntry<lexer::TokenType::LessThan>              { nullptr,                   nullptr,         Precedence::Unknown },
-            ParserTableEntry<lexer::TokenType::GreaterOrEquals>       { nullptr,                   nullptr,         Precedence::Unknown },
-            ParserTableEntry<lexer::TokenType::LessOrEquals>          { nullptr,                   nullptr,         Precedence::Unknown },
-            ParserTableEntry<lexer::TokenType::Return>                { nullptr,                   nullptr,         Precedence::Unknown },
-            ParserTableEntry<lexer::TokenType::NothingLiteral>        { nullptr,                   nullptr,         Precedence::Unknown },
-            ParserTableEntry<lexer::TokenType::UppercaseFunction>     { nullptr,                   nullptr,         Precedence::Unknown },
-            ParserTableEntry<lexer::TokenType::LineComment>           { nullptr,                   nullptr,         Precedence::Unknown },
-            ParserTableEntry<lexer::TokenType::Whitespace>            { nullptr,                   nullptr,         Precedence::Unknown },
-            ParserTableEntry<lexer::TokenType::LowercaseIdentifier>   { nullptr,                   nullptr,         Precedence::Unknown },
-            ParserTableEntry<lexer::TokenType::UppercaseIdentifier>   { nullptr,                   nullptr,         Precedence::Unknown }
+                ParserTableEntry<lexer::TokenType::Print>{ nullptr, nullptr, Precedence::Unknown },
+                ParserTableEntry<lexer::TokenType::Println>{ nullptr, nullptr, Precedence::Unknown },
+                ParserTableEntry<lexer::TokenType::LowercaseFunction>{ nullptr, nullptr, Precedence::Unknown },
+                ParserTableEntry<lexer::TokenType::Colon>{ nullptr, nullptr, Precedence::Unknown },
+                ParserTableEntry<lexer::TokenType::Comma>{ nullptr, nullptr, Precedence::Unknown },
+                ParserTableEntry<lexer::TokenType::TildeArrow>{ nullptr, nullptr, Precedence::Unknown },
+                ParserTableEntry<lexer::TokenType::EndOfFile>{ nullptr, nullptr, Precedence::Unknown },
+                ParserTableEntry<lexer::TokenType::Semicolon>{ nullptr, nullptr, Precedence::Unknown },
+                ParserTableEntry<lexer::TokenType::Plus>{ nullptr, &Parser::binary, Precedence::Term },
+                ParserTableEntry<lexer::TokenType::Minus>{ nullptr, &Parser::binary, Precedence::Term },
+                ParserTableEntry<lexer::TokenType::Asterisk>{ nullptr, &Parser::binary, Precedence::Factor },
+                ParserTableEntry<lexer::TokenType::Mod>{ nullptr, &Parser::binary, Precedence::Factor },
+                ParserTableEntry<lexer::TokenType::ForwardSlash>{ nullptr, &Parser::binary, Precedence::Factor },
+                ParserTableEntry<lexer::TokenType::LeftParenthesis>{ nullptr, nullptr, Precedence::Unknown },
+                ParserTableEntry<lexer::TokenType::RightParenthesis>{ nullptr, nullptr, Precedence::Unknown },
+                ParserTableEntry<lexer::TokenType::LeftCurlyBracket>{ nullptr, nullptr, Precedence::Unknown },
+                ParserTableEntry<lexer::TokenType::RightCurlyBracket>{ nullptr, nullptr, Precedence::Unknown },
+                ParserTableEntry<lexer::TokenType::Let>{ nullptr, nullptr, Precedence::Unknown },
+                ParserTableEntry<lexer::TokenType::Equals>{ nullptr, nullptr, Precedence::Unknown },
+                ParserTableEntry<lexer::TokenType::SignedIntegerLiteral>{ nullptr, nullptr, Precedence::Unknown },
+                ParserTableEntry<lexer::TokenType::UnsignedIntegerLiteral>{
+                        &Parser::unsigned_integer_literal,
+                        nullptr,
+                        Precedence::Unknown,
+                },
+                ParserTableEntry<lexer::TokenType::CharLiteral>{ nullptr, nullptr, Precedence::Unknown },
+                ParserTableEntry<lexer::TokenType::StringLiteral>{
+                        &Parser::string_literal,
+                        nullptr,
+                        Precedence::Unknown,
+                },
+                ParserTableEntry<lexer::TokenType::BoolLiteral>{ nullptr, nullptr, Precedence::Unknown },
+                ParserTableEntry<lexer::TokenType::And>{ nullptr, nullptr, Precedence::Unknown },
+                ParserTableEntry<lexer::TokenType::Or>{ nullptr, nullptr, Precedence::Unknown },
+                ParserTableEntry<lexer::TokenType::Not>{ nullptr, nullptr, Precedence::Unknown },
+                ParserTableEntry<lexer::TokenType::If>{ nullptr, nullptr, Precedence::Unknown },
+                ParserTableEntry<lexer::TokenType::Else>{ nullptr, nullptr, Precedence::Unknown },
+                ParserTableEntry<lexer::TokenType::Loop>{ nullptr, nullptr, Precedence::Unknown },
+                ParserTableEntry<lexer::TokenType::Break>{ nullptr, nullptr, Precedence::Unknown },
+                ParserTableEntry<lexer::TokenType::Continue>{ nullptr, nullptr, Precedence::Unknown },
+                ParserTableEntry<lexer::TokenType::While>{ nullptr, nullptr, Precedence::Unknown },
+                ParserTableEntry<lexer::TokenType::Do>{ nullptr, nullptr, Precedence::Unknown },
+                ParserTableEntry<lexer::TokenType::For>{ nullptr, nullptr, Precedence::Unknown },
+                ParserTableEntry<lexer::TokenType::Mutable>{ nullptr, nullptr, Precedence::Unknown },
+                ParserTableEntry<lexer::TokenType::Const>{ nullptr, nullptr, Precedence::Unknown },
+                ParserTableEntry<lexer::TokenType::EqualsEquals>{ nullptr, nullptr, Precedence::Unknown },
+                ParserTableEntry<lexer::TokenType::ExclamationEquals>{ nullptr, nullptr, Precedence::Unknown },
+                ParserTableEntry<lexer::TokenType::GreaterThan>{ nullptr, nullptr, Precedence::Unknown },
+                ParserTableEntry<lexer::TokenType::LessThan>{ nullptr, nullptr, Precedence::Unknown },
+                ParserTableEntry<lexer::TokenType::GreaterOrEquals>{ nullptr, nullptr, Precedence::Unknown },
+                ParserTableEntry<lexer::TokenType::LessOrEquals>{ nullptr, nullptr, Precedence::Unknown },
+                ParserTableEntry<lexer::TokenType::Return>{ nullptr, nullptr, Precedence::Unknown },
+                ParserTableEntry<lexer::TokenType::NothingLiteral>{ nullptr, nullptr, Precedence::Unknown },
+                ParserTableEntry<lexer::TokenType::UppercaseFunction>{ nullptr, nullptr, Precedence::Unknown },
+                ParserTableEntry<lexer::TokenType::LineComment>{ nullptr, nullptr, Precedence::Unknown },
+                ParserTableEntry<lexer::TokenType::Whitespace>{ nullptr, nullptr, Precedence::Unknown },
+                ParserTableEntry<lexer::TokenType::LowercaseIdentifier>{ nullptr, nullptr, Precedence::Unknown },
+                ParserTableEntry<lexer::TokenType::UppercaseIdentifier>{ nullptr, nullptr, Precedence::Unknown }
         );
-        // clang-format on
 
         [[nodiscard]] auto current_table_record() const -> ParserTableRecord const& {
             return parser_table.at(std::to_underlying(current().type()));

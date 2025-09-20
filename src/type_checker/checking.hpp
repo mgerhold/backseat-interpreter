@@ -1,23 +1,34 @@
 #pragma once
 
+#include <algorithm>
+#include <experimental/meta>
 #include <parser/parser.hpp>
 #include <type_checker/expressions.hpp>
 #include <type_checker/statements.hpp>
-#include <experimental/meta>
-#include <algorithm>
+#include <utility>
 
 namespace type_checker {
+
+    template<typename BaseType, typename Result>
+    [[nodiscard]] auto check_child_types(BaseType const& value) -> std::unique_ptr<Result>;
 
     [[nodiscard]] inline auto check_types(parser::StringLiteral const& expression) -> std::unique_ptr<Expression> {
         return std::make_unique<StringLiteral>(expression.token());
     }
 
-    [[nodiscard]] inline auto check_types(parser::UnsignedIntegerLiteral const& expression) -> std::unique_ptr<Expression> {
+    [[nodiscard]] inline auto check_types(parser::UnsignedIntegerLiteral const& expression)
+            -> std::unique_ptr<Expression> {
         return std::make_unique<UnsignedIntegerLiteral>(expression.token());
     }
 
     [[nodiscard]] inline auto check_types(parser::Println const& statement) -> std::unique_ptr<Statement> {
         return std::make_unique<Println>(statement.argument());
+    }
+
+    [[nodiscard]] inline auto check_types(parser::BinaryOperator const& expression) -> std::unique_ptr<Expression> {
+        auto lhs = check_child_types<parser::Expression, Expression>(expression.lhs());
+        auto rhs = check_child_types<parser::Expression, Expression>(expression.rhs());
+        return std::make_unique<BinaryOperator>(std::move(lhs), expression.operator_token(), std::move(rhs));
     }
 
     template<typename BaseType, typename Result>

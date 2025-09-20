@@ -6,6 +6,8 @@ add_library(type_checker STATIC
         include/type_checker/data_type.hpp
         checking.hpp
         statements.cpp
+        data_type.cpp
+        include/type_checker/errors.hpp
 )
 
 target_include_directories(type_checker PUBLIC include)

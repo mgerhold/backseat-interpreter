@@ -18,6 +18,7 @@ namespace type_checker {
         virtual ~DataType() = default;
 
         [[nodiscard]] virtual auto as_builtin_type() const -> tl::optional<BuiltinDataType> = 0;
+        [[nodiscard]] static auto from_builtin_type(BuiltinDataType type) -> std::unique_ptr<DataType>;
     };
 
     class String final : public DataType {

@@ -1,11 +1,11 @@
 #pragma once
 
-#include <type_checker/type_checker.hpp>
+#include "error.hpp"
+#include "values.hpp"
 #include <algorithm>
 #include <experimental/meta>
 #include <print>
-#include "values.hpp"
-#include "error.hpp"
+#include <type_checker/type_checker.hpp>
 
 namespace interpreter {
 
@@ -15,8 +15,7 @@ namespace interpreter {
 
     public:
         [[nodiscard]] explicit Interpreter(std::vector<std::unique_ptr<type_checker::Statement>> program)
-            : m_program{ std::move(program) } {
-        }
+            : m_program{ std::move(program) } { }
 
         auto run() -> void {
             for (auto const& statement : m_program) {
@@ -71,7 +70,45 @@ namespace interpreter {
             return std::make_unique<U64>(expression.value());
         }
 
-        auto evaluate_expression(type_checker::Expression const& statement) -> std::unique_ptr<Value> {
+        auto evaluate(U64 const& lhs, lexer::TokenType const operator_token_type, U64 const& rhs)
+                -> std::unique_ptr<U64> {
+            switch (operator_token_type) {
+                case lexer::TokenType::Plus:
+                    return std::make_unique<U64>(lhs.value() + rhs.value());
+                case lexer::TokenType::Minus:
+                    return std::make_unique<U64>(lhs.value() - rhs.value());
+                case lexer::TokenType::Asterisk:
+                    return std::make_unique<U64>(lhs.value() * rhs.value());
+                case lexer::TokenType::ForwardSlash:
+                    if (rhs.value() == 0) {
+                        throw InterpreterError{ "Division by zero." };
+                    }
+                    return std::make_unique<U64>(lhs.value() / rhs.value());
+                case lexer::TokenType::Mod:
+                    if (rhs.value() == 0) {
+                        throw InterpreterError{ "Division by zero." };
+                    }
+                    return std::make_unique<U64>(lhs.value() % rhs.value());
+                default:
+                    throw std::runtime_error{ "Unreachable" };
+            }
+        }
+
+        auto evaluate(type_checker::BinaryOperator const& expression) -> std::unique_ptr<Value> {
+            auto lhs = evaluate_expression(expression.lhs());
+            auto rhs = evaluate_expression(expression.rhs());
+            auto const operator_token = expression.operator_token();
+
+            auto const lhs_u64 = dynamic_cast<U64 const*>(lhs.get());
+            auto const rhs_u64 = dynamic_cast<U64 const*>(rhs.get());
+            if (lhs_u64 != nullptr and rhs_u64 != nullptr) {
+                return evaluate(*lhs_u64, operator_token.type(), *rhs_u64);
+            }
+
+            throw std::runtime_error{ "Unreachable" };
+        }
+
+        auto evaluate_expression(type_checker::Expression const& expression) -> std::unique_ptr<Value> {
             static constexpr auto context = std::meta::access_context::current();
             template for (constexpr auto member : std::define_static_array(members_of(^^type_checker, context))) {
                 if constexpr (is_type(member) and is_class_type(member)) {
@@ -80,7 +117,7 @@ namespace interpreter {
                                 return is_same_type(type_of(base), ^^type_checker::Expression);
                             });
                     if constexpr (does_inherit_base) {
-                        auto const downcasted = dynamic_cast<[:member:] const*>(std::addressof(statement));
+                        auto const downcasted = dynamic_cast<[:member:] const*>(std::addressof(expression));
                         if (downcasted != nullptr) {
                             return evaluate(*downcasted);
                         }
@@ -91,4 +128,4 @@ namespace interpreter {
         }
     };
 
-}
+} // namespace interpreter
