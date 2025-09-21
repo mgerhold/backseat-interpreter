@@ -15,6 +15,18 @@ namespace type_checker {
         virtual ~Statement() = default;
     };
 
+    class Print final : public Statement {
+    private:
+        std::unique_ptr<Expression> m_argument;
+
+    public:
+        [[nodiscard]] explicit Print(parser::Expression const& argument);
+
+        [[nodiscard]] auto argument() const -> std::unique_ptr<Expression> const& {
+            return m_argument;
+        }
+    };
+
     class Println final : public Statement {
     private:
         std::unique_ptr<Expression> m_argument;

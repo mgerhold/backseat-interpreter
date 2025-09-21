@@ -15,6 +15,18 @@ namespace parser {
         virtual ~Statement() = default;
     };
 
+    class Print final : public Statement {
+    private:
+        std::unique_ptr<Expression> m_argument;
+
+    public:
+        [[nodiscard]] explicit Print(std::unique_ptr<Expression> m_argument) : m_argument{ std::move(m_argument) } { }
+
+        [[nodiscard]] auto argument() const -> Expression const& {
+            return *m_argument;
+        }
+    };
+
     class Println final : public Statement {
     private:
         std::unique_ptr<Expression> m_argument;

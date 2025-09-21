@@ -71,6 +71,13 @@ namespace parser {
 
         [[nodiscard]] auto statement() -> std::unique_ptr<Statement> {
             using lexer::TokenType;
+            if (auto const _ = match(TokenType::Print)) {
+                expect(TokenType::LeftParenthesis);
+                auto argument = expression(Precedence::Unknown);
+                expect(TokenType::RightParenthesis);
+                expect(TokenType::Semicolon);
+                return std::make_unique<Print>(std::move(argument));
+            }
             if (auto const _ = match(TokenType::Println)) {
                 expect(TokenType::LeftParenthesis);
                 auto argument = expression(Precedence::Unknown);

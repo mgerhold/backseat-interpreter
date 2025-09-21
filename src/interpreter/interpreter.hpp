@@ -24,9 +24,7 @@ namespace interpreter {
         }
 
     private:
-        auto interpret(type_checker::Println const& statement) -> void {
-            auto const value = evaluate_expression(*statement.argument());
-            auto const builtin_type = statement.argument()->data_type().as_builtin_type();
+        auto print_value(Value const& value, tl::optional<type_checker::BuiltinDataType> const& builtin_type) -> void {
             if (not builtin_type.has_value()) {
                 throw InterpreterError{ "Expected builtin data type." };
             }
@@ -34,14 +32,27 @@ namespace interpreter {
                 using enum type_checker::BuiltinDataType;
 
                 case String:
-                    std::println("{}", dynamic_cast<interpreter::String const&>(*value).data());
+                    std::print("{}", dynamic_cast<interpreter::String const&>(value).data());
                     break;
                 case U64:
-                    std::println("{}", dynamic_cast<interpreter::U64 const&>(*value).value());
+                    std::print("{}", dynamic_cast<interpreter::U64 const&>(value).value());
                     break;
                 default:
                     throw InterpreterError{ "Unsupported builtin data type." };
             }
+        }
+
+        auto interpret(type_checker::Print const& statement) -> void {
+            auto const value = evaluate_expression(*statement.argument());
+            auto const builtin_type = statement.argument()->data_type().as_builtin_type();
+            print_value(*value, builtin_type);
+        }
+
+        auto interpret(type_checker::Println const& statement) -> void {
+            auto const value = evaluate_expression(*statement.argument());
+            auto const builtin_type = statement.argument()->data_type().as_builtin_type();
+            print_value(*value, builtin_type);
+            std::println();
         }
 
         auto interpret_statement(type_checker::Statement const& statement) -> void {
