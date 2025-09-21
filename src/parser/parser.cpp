@@ -115,6 +115,13 @@ namespace parser {
             return std::make_unique<BinaryOperator>(std::move(left_operand), operator_token, std::move(right_operand));
         }
 
+        [[nodiscard]] auto group() -> std::unique_ptr<Expression> {
+            auto const _ = expect(lexer::TokenType::LeftParenthesis);
+            auto inside_expression = expression(Precedence::Unknown);
+            expect(lexer::TokenType::RightParenthesis);
+            return inside_expression;
+        }
+
         static inline auto parser_table = create_parser_table(
                 ParserTableEntry<lexer::TokenType::Print>{ nullptr, nullptr, Precedence::Unknown },
                 ParserTableEntry<lexer::TokenType::Println>{ nullptr, nullptr, Precedence::Unknown },
@@ -129,7 +136,7 @@ namespace parser {
                 ParserTableEntry<lexer::TokenType::Asterisk>{ nullptr, &Parser::binary, Precedence::Factor },
                 ParserTableEntry<lexer::TokenType::Mod>{ nullptr, &Parser::binary, Precedence::Factor },
                 ParserTableEntry<lexer::TokenType::ForwardSlash>{ nullptr, &Parser::binary, Precedence::Factor },
-                ParserTableEntry<lexer::TokenType::LeftParenthesis>{ nullptr, nullptr, Precedence::Unknown },
+                ParserTableEntry<lexer::TokenType::LeftParenthesis>{ &Parser::group, nullptr, Precedence::Unknown },
                 ParserTableEntry<lexer::TokenType::RightParenthesis>{ nullptr, nullptr, Precedence::Unknown },
                 ParserTableEntry<lexer::TokenType::LeftCurlyBracket>{ nullptr, nullptr, Precedence::Unknown },
                 ParserTableEntry<lexer::TokenType::RightCurlyBracket>{ nullptr, nullptr, Precedence::Unknown },
